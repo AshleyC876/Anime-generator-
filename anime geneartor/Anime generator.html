@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Generator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    img {
+      max-width: 15%;
+      height: auto;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Anime Generator</h1>
+    <label for="interest">Select your interest:</label>
+    <select id="interest">
+      <option value="comedy">Comedy</option>
+      <option value="action">Action</option>
+      <option value="adventure">Adventure</option>
+      <option value="popular">Popular</option>
+      <option value="romance">Romance</option>
+    </select>
+    <button onclick="generateAnime()">Generate Anime</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function generateAnime() {
+      const interest = document.getElementById('interest').value;
+      const resultContainer = document.getElementById('result');
+      const genres = {
+        comedy: [
+          { name: 'spy x family', image: 'comedy_anime1.jpg' },
+          { name: 'silver spoon', image: 'comedy_anime2.jpg' },
+        ],
+        action: [
+          { name: 'jujutsu Kaisen', image: 'action_anime1.jpg' },
+          { name: 'Demon slayer', image: 'action_anime2.jpg' },
+        ],
+        adventure: [
+          { name: 'One piece', image: 'adventure_anime1.jpg' },
+          { name: 'Cow Boy Bebop', image: 'adventure_anime2.jpg' },
+        ],
+        popular: [
+          { name: 'Attack on Titan', image: 'popular_anime1.jpg' },
+          { name: 'Death Note', image: 'popular_anime2.jpg' },
+        ],
+        romance: [
+          { name: 'Golden Time', image: 'romance_anime1.jpg' },
+          { name: 'I want to Eat Your Pancreas', image: 'romance_anime2.jpg' },
+        ],
+      };
+
+      const selectedAnime = genres[interest];
+      const randomAnime = shuffleArray(selectedAnime).slice(0, 2); 
+
+      resultContainer.innerHTML = `<h2>Top 2 ${interest} Anime:</h2>`;
+      const ul = document.createElement('ul');
+      randomAnime.forEach(anime => {
+        const li = document.createElement('li');
+        li.textContent = anime.name;
+        const img = document.createElement('img');
+        img.src = `images/${anime.image}`;
+        li.appendChild(img);
+        ul.appendChild(li);
+      });
+      resultContainer.appendChild(ul);
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+  </script>
+</body>
+</html>
